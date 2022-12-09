@@ -3,7 +3,7 @@ import { ListItem } from "../components/ListItem";
 import Entypo from '@expo/vector-icons/Entypo';
 import { theme } from "../theme";
 
-export const Settings = () => (
+export const Settings = ({ navigation }) => (
     <View 
         style={{ 
             margin: 15,
@@ -21,9 +21,11 @@ export const Settings = () => (
                     size={18}
                 />
             }
-            onClick={() => {}}
+            onClick={() => {
+                navigation.navigate('Categories');
+            }}
         />
-        <ListItem label="Erase all data" isDestructive onClick={() => {}}
+        <ListItem label="Erase all data" isDestructive lastElement onClick={() => {}}
         />
     </View>
 );

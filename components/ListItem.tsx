@@ -10,9 +10,10 @@ type Props = {
     swipeToDelete?: boolean;
     onDelete?: () => void;
     isDestructive?: boolean;
+    lastElement?: boolean;
 }
 
-export const ListItem = ({ label, detail, onClick, swipeToDelete, onDelete, isDestructive }: Props) => {
+export const ListItem = ({ label, detail, onClick, swipeToDelete, onDelete, isDestructive, lastElement }: Props) => {
     const item = useMemo(() => (
         <TouchableOpacity
             style={{
@@ -21,7 +22,7 @@ export const ListItem = ({ label, detail, onClick, swipeToDelete, onDelete, isDe
                 justifyContent: !!detail ? 'space-between' : 'flex-start',
                 alignItems: 'center',
                 padding: 11,
-                borderBottomWidth: 1,
+                borderBottomWidth: lastElement ? 0 : 1,
                 borderBottomColor: theme.colors.border,
                 backgroundColor: theme.colors.card,
             }}
