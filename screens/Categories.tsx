@@ -39,8 +39,8 @@ export const Categories = ({ navigation }) => {
             }}
         >
             {
-                categories && categories.map(({ id, color, name }) => (
-                    <CategoryRow key={id} color={color} name={name} />
+                categories && categories.map(({ id, color, name }, index) => (
+                    <CategoryRow key={id} lastElement={(categories.length - 1) === index ? true : false} color={color} name={name} />
                 ))
             }
         </View>

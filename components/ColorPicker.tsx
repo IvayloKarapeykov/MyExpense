@@ -1,4 +1,4 @@
-import { View, Pressable, Text, Modal } from 'react-native';
+import { View, Pressable, Text, Modal, StyleSheet } from 'react-native';
 import { ColorPicker, fromHsv } from 'react-native-color-picker';
 import { theme } from '../theme';
 
@@ -11,17 +11,7 @@ export const CPicker = ({ visible, selectedColor, setSelectedColor, setShowModal
     return (
         <Modal transparent visible={visible} onRequestClose={() => setShowModal(false)} animationType='slide'>
             <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-                <View 
-                    style={{ 
-                        height: 400, 
-                        margin: 25,
-                        marginTop: 50, 
-                        paddingHorizontal: 20,
-                        paddingBottom: 15,
-                        borderRadius: 10, 
-                        backgroundColor: theme.colors.card
-                    }}
-                >
+                <View style={styles({}).container}>
                     <ColorPicker
                         hideSliders
                         color={selectedColor}
@@ -30,28 +20,11 @@ export const CPicker = ({ visible, selectedColor, setSelectedColor, setShowModal
                     />
 
                     <Pressable 
-                        style={{
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            paddingVertical: 12,
-                            paddingHorizontal: 32,
-                            marginTop: 5,
-                            borderRadius: 10,
-                            elevation: 3,
-                            backgroundColor: 'black',
-                        }} 
+                        style={styles({}).button} 
                         onPress={() => 
                         setShowModal(false)}
                     >
-                        <Text 
-                            style={{ 
-                                fontSize: 16,
-                                lineHeight: 21,
-                                fontWeight: 'bold',
-                                letterSpacing: 0.25,
-                                color: selectedColor, 
-                            }}
-                        >
+                        <Text style={styles({ selectedColor }).buttonText}>
                             Select
                         </Text>
                     </Pressable>
@@ -61,3 +34,32 @@ export const CPicker = ({ visible, selectedColor, setSelectedColor, setShowModal
         </Modal>
     )
 }
+
+const styles = (props) => StyleSheet.create({
+    container: {
+        height: 400, 
+        margin: 25,
+        marginTop: 50, 
+        paddingHorizontal: 20,
+        paddingBottom: 15,
+        borderRadius: 10, 
+        backgroundColor: theme.colors.card
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        marginTop: 5,
+        borderRadius: 10,
+        elevation: 3,
+        backgroundColor: 'black',
+    },
+    buttonText: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: props.selectedColor, 
+    }
+})

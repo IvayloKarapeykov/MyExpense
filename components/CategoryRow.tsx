@@ -2,7 +2,9 @@ import { Text, View } from "react-native"
 import { theme } from "../theme"
 import { Category } from "../types/category"
 
-export const CategoryRow = ({ color, name }: Omit<Category, 'id'>) => {
+type Props = Omit<Category, 'id'> & { lastElement: boolean };
+
+export const CategoryRow = ({ lastElement, color, name }: Props) => {
     return (
         <View
             style={{
@@ -12,7 +14,7 @@ export const CategoryRow = ({ color, name }: Omit<Category, 'id'>) => {
                 justifyContent: 'flex-start',
                 width: '100%',
                 padding: 11,
-                borderBottomWidth: 1,
+                borderBottomWidth: lastElement ? 0 : 1,
                 borderBottomColor: theme.colors.border,
                 backgroundColor: theme.colors.card,
             }}
