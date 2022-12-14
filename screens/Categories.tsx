@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, TextInput, View } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { 
+    KeyboardAvoidingView, 
+    Platform, 
+    StyleSheet, 
+    TextInput, 
+    View, 
+    Alert, 
+    Keyboard,
+    ScrollView
+} from "react-native";
 import { theme } from "../theme";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, Swipeable, RectButton } from "react-native-gesture-handler";
 import { TabBarIcon } from "../components/TabBarIcon";
 import { Category } from '../types/category';
 import { CategoryRow } from '../components/CategoryRow';
 import { CPicker } from '../components/ColorPicker';
 
-export const Categories = ({ navigation }) => {
+export const Categories = () => {
     const [showCPicker, setShowCPicker] = useState(false);
     const [selectedColor, setSelectedColor] = useState(theme.colors.primary);
     const [categoryName, setCategoryName] = useState('');
-    const [categories, setCategories] = useState<Category[]>([])
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
     const submitCategory = () => {
         if(categoryName.length === 0) {
@@ -26,23 +36,74 @@ export const Categories = ({ navigation }) => {
         setCategoryName('');
     }
 
+    const renderLeftActions = ({ id, name }) => {
+        return (
+          <RectButton style={{ backgroundColor: theme.colors.error, width: 50, height: '100%', justifyContent: 'center' }} onPress={() => alertBeforeDelete({ id, name })}>
+            <View style={{ alignItems: 'center' }}>
+                <TabBarIcon type="delete" size={24} color={theme.colors.text} />
+            </View>
+          </RectButton>
+        );
+    };
+
+    const alertBeforeDelete = ({ id, name }) => {
+        Alert.alert(
+            'Are you sure?',
+            `Delete '${name}' category`,
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                { text: "Delete", onPress: () => deleteCategory({ id }), style: 'destructive' }
+            ]
+        )
+    }
+
+    const deleteCategory = ({ id }) => {
+        let catCopy = categories;
+        let newCat = catCopy.filter(item => item.id !== id);
+        setCategories(newCat);
+    }
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+            setKeyboardVisible(true); // or some other action
+        });
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardVisible(false); // or some other action
+        });
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+    }, []);
+
     return (
     <KeyboardAvoidingView 
         behavior="height"
         style={{ margin: 15, flex: 1 }}
-        keyboardVerticalOffset={180}
+        keyboardVerticalOffset={175}
     >
         <View 
             style={{ 
                 borderRadius: 10,
                 overflow: 'hidden',
+                maxHeight: isKeyboardVisible ? 337 : 800
             }}
         >
+            <ScrollView 
+                automaticallyAdjustKeyboardInsets
+            >
             {
                 categories && categories.map(({ id, color, name }, index) => (
-                    <CategoryRow key={id} lastElement={(categories.length - 1) === index ? true : false} color={color} name={name} />
+                    <Swipeable key={id} renderRightActions={() => renderLeftActions({ id, name })}>
+                        <CategoryRow lastElement={(categories.length - 1) === index ? true : false} color={color} name={name} />
+                    </Swipeable>
                 ))
             }
+            </ScrollView>
         </View>
         <View style={{ flex: 1 }} />
         <View 
@@ -50,10 +111,13 @@ export const Categories = ({ navigation }) => {
                 display: 'flex', 
                 flexDirection: 'row', 
                 paddingVertical: 8,
-                alignItems: 'center'
+                alignItems: 'center',
             }} 
         >
-            <TouchableOpacity onPress={() => setShowCPicker(val => !val)}>
+            <TouchableOpacity onPress={() => {
+                setShowCPicker(val => !val)
+                Keyboard.dismiss();
+            }}>
                 <View style={styles({ selectedColor }).colorButton}/>
             </TouchableOpacity>
 
