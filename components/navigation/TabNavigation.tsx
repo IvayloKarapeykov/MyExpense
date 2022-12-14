@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Expenses, Reports, Add, Settings } from '../screens';
-import { theme } from '../theme';
-import { TabBarIcon } from '../components/TabBarIcon';
+import { Expenses, Reports, Add, Settings } from '../../screens';
+import { theme } from '../../theme';
+import { TabBarIcon } from '../TabBarIcon';
 
 const Tab = createBottomTabNavigator();
 

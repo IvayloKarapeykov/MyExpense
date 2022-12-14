@@ -1,7 +1,6 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { ListItem } from "../components/ListItem";
 import Entypo from '@expo/vector-icons/Entypo';
-import { theme } from "../theme";
 
 export const Settings = ({ navigation }) => (
     <View 

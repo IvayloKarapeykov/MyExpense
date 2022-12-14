@@ -14,25 +14,23 @@ type Props = {
 }
 
 export const ListItem = ({ label, detail, onClick, swipeToDelete, onDelete, isDestructive, lastElement }: Props) => {
-    const item = useMemo(() => (
-        <TouchableOpacity
-            style={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: !!detail ? 'space-between' : 'flex-start',
-                alignItems: 'center',
-                padding: 11,
-                borderBottomWidth: lastElement ? 0 : 1,
-                borderBottomColor: theme.colors.border,
-                backgroundColor: theme.colors.card,
-            }}
-            activeOpacity={0.5}
-            onPress={onClick}
-        >
-            <Text style={{ fontSize: 18, color: isDestructive ? theme.colors.error : 'white' }}>{label}</Text>
-            {detail}
-        </TouchableOpacity>
-    ), []);
+    const item = <TouchableOpacity
+        style={{
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: !!detail ? 'space-between' : 'flex-start',
+            alignItems: 'center',
+            padding: 11,
+            borderBottomWidth: lastElement ? 0 : 1,
+            borderBottomColor: theme.colors.border,
+            backgroundColor: theme.colors.card,
+        }}
+        activeOpacity={0.5}
+        onPress={onClick}
+    >
+        <Text style={{ fontSize: 18, color: isDestructive ? theme.colors.error : 'white' }}>{label}</Text>
+        {detail}
+    </TouchableOpacity>
 
     if (swipeToDelete) {
         return (
