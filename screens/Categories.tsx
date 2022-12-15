@@ -56,7 +56,10 @@ export const Categories = () => {
                     style: "cancel"
                 },
                 { text: "Delete", onPress: () => deleteCategory({ id }), style: 'destructive' }
-            ]
+            ],
+            {
+                userInterfaceStyle: 'dark'
+            }
         )
     }
 
