@@ -33,7 +33,6 @@ export const Add = () => {
                             <TextInput 
                                 placeholder='Amount'
                                 keyboardType='numeric'
-                                // inputAccessoryViewID='dismissKeyboard'
                                 returnKeyType='done'
                                 onChangeText={(value) => setAmount(value)}
                                 value={amount}
