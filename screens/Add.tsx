@@ -80,7 +80,7 @@ export const Add = () => {
                             right: 0,
                         }}
                     >
-                        <View style={{ alignItems: 'flex-end', paddingHorizontal: 10, paddingVertical: 5, backgroundColor: theme.colors.card }}>
+                        <View style={styles({}).keyboardBar} >
                             <Button title="Done" onPress={() => setRecurrencePicker(false)} />
                         </View>
                         <Picker
@@ -117,5 +117,13 @@ const styles = (props) => StyleSheet.create({
         borderWidth: 2,
         borderRadius: 12,
         marginRight: 10
+    },
+    keyboardBar: {
+        alignItems: 'flex-end', 
+        paddingHorizontal: 10, 
+        paddingVertical: 3, 
+        backgroundColor: theme.colors.card,
+        borderWidth: 1,
+        borderTopColor: theme.colors.border 
     }
 })
