@@ -7,7 +7,8 @@ import {
     View, 
     Alert, 
     Keyboard,
-    ScrollView
+    ScrollView,
+    Text
 } from "react-native";
 import { theme } from "../theme";
 import { TouchableOpacity, Swipeable, RectButton } from "react-native-gesture-handler";
@@ -89,25 +90,35 @@ export const Categories = () => {
         style={{ margin: 15, flex: 1 }}
         keyboardVerticalOffset={175}
     >
-        <View 
-            style={{ 
-                borderRadius: 10,
-                overflow: 'hidden',
-                maxHeight: isKeyboardVisible ? 337 : 800
-            }}
-        >
-            <ScrollView 
-                automaticallyAdjustKeyboardInsets
+        {
+            categories && Object.keys(categories).length ?
+            <View 
+                style={{ 
+                    borderRadius: 10,
+                    overflow: 'hidden',
+                    maxHeight: isKeyboardVisible ? 337 : 800
+                }}
             >
-            {
-                categories && categories.map(({ id, color, name }, index) => (
-                    <Swipeable key={id} renderRightActions={() => renderLeftActions({ id, name })}>
-                        <CategoryRow lastElement={(categories.length - 1) === index ? true : false} color={color} name={name} />
-                    </Swipeable>
-                ))
-            }
-            </ScrollView>
-        </View>
+                <ScrollView 
+                    automaticallyAdjustKeyboardInsets
+                >
+                {
+                    categories && categories.map(({ id, color, name }, index) => (
+                        <Swipeable key={id} renderRightActions={() => renderLeftActions({ id, name })}>
+                            <CategoryRow lastElement={(categories.length - 1) === index ? true : false} color={color} name={name} />
+                        </Swipeable>
+                    ))
+                }
+                </ScrollView>
+            </View>
+            :
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text 
+                    style={styles({}).emptyListText}>
+                    You haven't added any categories yet.
+                </Text>
+            </View>
+        }
         <View style={{ flex: 1 }} />
         <View 
             style={{ 
@@ -125,7 +136,7 @@ export const Categories = () => {
             </TouchableOpacity>
 
             <TextInput 
-                placeholder='Category name'
+                placeholder='New Category'
                 onChangeText={(value) => setCategoryName(value)}
                 value={categoryName}
                 keyboardType={Platform.OS === 'ios' ? 'ascii-capable' : 'visible-password'} // This helps us to prevent emoji's using
@@ -159,5 +170,14 @@ const styles = (props) => StyleSheet.create({
         borderWidth: 2,
         borderRadius: 12,
         marginRight: 10
+    },
+    emptyListText: {
+        paddingHorizontal: 10, 
+        paddingVertical: 5,
+        borderWidth: 2, 
+        borderColor: theme.colors.border, 
+        borderRadius: 10, 
+        color: theme.colors.text, 
+        fontSize: 17
     }
 })
