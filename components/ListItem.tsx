@@ -27,6 +27,7 @@ export const ListItem = ({ label, detail, onClick, swipeToDelete, onDelete, isDe
         }}
         activeOpacity={0.5}
         onPress={onClick}
+        disabled={!onClick}
     >
         <Text style={{ fontSize: 18, color: isDestructive ? theme.colors.error : 'white' }}>{label}</Text>
         {detail}
