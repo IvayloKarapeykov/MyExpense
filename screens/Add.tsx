@@ -52,7 +52,7 @@ export const Add = () => {
     const [recurrence, setRecurrence] = useState<Recurrence>(Recurrence.None);
     const [picker, setPicker] = useState(false);
     const [pickerType, setPickerType] = useState<'recurrence' | 'date' | 'category'>('recurrence');
-    const [date, setDate] = useState(new Date(1598051730000));
+    const [date, setDate] = useState(new Date());
     const [note, setNote] = useState('');
     const [category, setCategory] = useState<Category>();
 
