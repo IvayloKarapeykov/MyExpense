@@ -28,7 +28,11 @@ export const ExpenseRow = ({ expense }: Props) => {
                 >
                         <Text style={{ color: expense.category.color, fontSize: 13 }} >{expense.category.name}</Text>
                 </View>
-                <Text style={{ fontSize: 17, color: theme.colors.textSecondary  }}>{expense.date.getHours()}:{expense.date.getMinutes()}</Text>
+                <Text style={{ fontSize: 17, color: theme.colors.textSecondary  }}>
+                    {`${expense.date.getHours()}`.padStart(2, '0')}
+                    :
+                    {`${expense.date.getMinutes()}`.padStart(2, '0')}
+                </Text>
             </View>
         </View>
     )

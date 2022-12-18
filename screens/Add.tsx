@@ -138,7 +138,7 @@ export const Add = () => {
                                 }}
                             >
                                 <Text style={{ fontSize: 17, textAlign: 'right', color: theme.colors.primary, textTransform: 'capitalize' }}>
-                                    {date.toLocaleDateString()}
+                                    {date.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})}
                                 </Text>
                             </TouchableOpacity>
                         }
@@ -225,7 +225,7 @@ export const Add = () => {
                             <DateTimePicker
                                 testID="dateTimePicker"
                                 value={date}
-                                mode='date'
+                                mode='datetime'
                                 display='spinner'
                                 maximumDate={new Date()}
                                 minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 1))}
