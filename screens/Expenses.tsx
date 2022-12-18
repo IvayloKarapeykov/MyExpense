@@ -54,11 +54,11 @@ export const Expenses = () => (
                         amount: 150,
                         category: {
                             id: '3',
-                            name: 'TBI',
+                            name: 'Gym',
                             color: '#ab38cd'
                         },
                         date: new Date(),
-                        note: 'TBI Vnoski',
+                        note: 'Mesec',
                         recurrence: Recurrence.None,
                     }
                 ],
