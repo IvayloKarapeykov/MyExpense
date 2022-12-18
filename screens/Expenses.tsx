@@ -46,7 +46,7 @@ export const Expenses = () => (
                             color: '#4924cd'
                         },
                         date: new Date(),
-                        note: 'Bought some food',
+                        note: 'Supermarket',
                         recurrence: Recurrence.None,
                     },
                     {
