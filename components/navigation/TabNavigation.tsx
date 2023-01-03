@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useState } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
 import { Expenses, Reports, Settings } from '../../screens';
 import { theme } from '../../theme';
 import { TabBarIcon } from '../TabBarIcon';
@@ -8,6 +8,8 @@ import { TabBarIcon } from '../TabBarIcon';
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator = ({ navigation }) => {
+    const [reportsSelectorOpen, setReportsSelectorOpen] = useState(false);
+
     return (
         <Tab.Navigator  
             screenOptions={{
@@ -21,7 +23,7 @@ export const TabNavigator = ({ navigation }) => {
                     tabBarIcon: (props) => <TabBarIcon {...props} type='expenses' />, 
                     headerRight: () => (
                         <TouchableOpacity onPress={() => navigation.navigate('Add')} style={{ marginRight: 15 }}>
-                            <TabBarIcon type='add' size={28} color={theme.colors.text} />
+                            <TabBarIcon type='add' size={28} color={theme.colors.primary} />
                         </TouchableOpacity>
                     ),
                     headerLeft: () => (
@@ -34,15 +36,21 @@ export const TabNavigator = ({ navigation }) => {
             />
             <Tab.Screen 
                 options={{ 
-                    tabBarIcon: (props) => <TabBarIcon {...props} type='reports' /> ,
+                    tabBarIcon: (props) => <TabBarIcon {...props} type='reports' />,
                     headerLeft: () => (
                         <Text style={{ fontSize: 22, color: 'white', fontWeight: '600', marginLeft: 20 }}>Reports</Text>
+                    ),
+                    headerRight: () => (
+                        <TouchableOpacity onPress={() => setReportsSelectorOpen(!reportsSelectorOpen)} style={{ marginRight: 15 }}>
+                            <TabBarIcon type='reports' size={28} color={theme.colors.primary} />
+                        </TouchableOpacity>
                     ),
                     headerTitle: ''
                 }} 
                 name='Reports' 
-                component={Reports}
-            />
+            >
+                {() => <Reports reportsSelectorOpen={reportsSelectorOpen} setReportsSelectorOpen={setReportsSelectorOpen} />}
+            </Tab.Screen>
             <Tab.Screen 
                 options={{ 
                     tabBarIcon: (props) => <TabBarIcon {...props} type='settings' />,
